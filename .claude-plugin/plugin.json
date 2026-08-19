@@ -1,0 +1,11 @@
+{
+  "name": "dopamine-hooks-claude",
+  "description": "Claude Codeの生成待ちの間，気分転換用のブラウザウィンドウを自動で開閉するフック集",
+  "version": "0.1.0",
+  "author": {
+    "name": "MorohoshiMari"
+  },
+  "homepage": "https://github.com/MorohoshiMari/dopamine-hooks-claude#readme",
+  "repository": "https://github.com/MorohoshiMari/dopamine-hooks-claude",
+  "license": "MIT"
+}

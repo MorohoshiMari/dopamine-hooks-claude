@@ -1,0 +1,20 @@
+{
+  "name": "dopamine-hooks-claude-marketplace",
+  "owner": {
+    "name": "MorohoshiMari",
+    "url": "https://github.com/MorohoshiMari"
+  },
+  "description": "dopamine-hooks-claude プラグインのマーケットプレイス",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "dopamine-hooks-claude",
+      "source": ".",
+      "description": "Claude Codeの生成待ちの間，気分転換用のブラウザウィンドウを自動で開閉するフック集",
+      "version": "0.1.0",
+      "author": {
+        "name": "MorohoshiMari"
+      }
+    }
+  ]
+}

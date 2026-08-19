@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
-# UserPromptSubmit hook — 指定 URL を新しい Chrome ウィンドウで開く。
+# UserPromptSubmit hook — 指定 URL を新しいブラウザウィンドウで開く。
 # 開く直前に最前面だったアプリ名とウィンドウ ID を state ファイルに保存し、
 # Stop hook (dopamine-close.sh) がそれを見て元の画面に復帰する。
 #
-# 設定は settings.json の env よりも、実行のたびに settings.json 自体を
-# jq で読み直す値を優先する。/dopamine-url や /dopamine-on|off コマンドで
-# settings.json を書き換えた場合に、再起動なしで即座に反映させるため。
+# プラグインとして配布されるため、このスクリプト自身はプロジェクトの外
+# (~/.claude/plugins/...) にインストールされる。設定の上書きはプロジェクト
+# 側の $CLAUDE_PROJECT_DIR/.claude/settings.json の env を読みに行く。
 #   env.CLAUDE_DOPAMINE_URL      開く URL (既定: YouTube Shorts フィード)
 #   env.CLAUDE_DOPAMINE_DISABLE  "1" なら何もしない
 #   env.CLAUDE_DOPAMINE_BROWSER  開くブラウザ (既定: Google Chrome)
@@ -16,8 +16,7 @@
 #
 set -uo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SETTINGS_FILE="$SCRIPT_DIR/../settings.json"
+SETTINGS_FILE="${CLAUDE_PROJECT_DIR:-}/.claude/settings.json"
 
 # settings.json (jq で読める) が使えるときはそれを唯一の情報源として使う。
 # プロセス環境変数へは絶対にフォールバックしない — Claude Code は settings.json
@@ -25,7 +24,7 @@ SETTINGS_FILE="$SCRIPT_DIR/../settings.json"
 # 消してくれない (確認済み)。そのため空欄フォールバックにすると、過去に一度でも
 # 設定した値が settings.json から消えても環境変数に残った古い値を拾ってしまう。
 # jq や設定ファイル自体が使えない場合のみ、環境変数 → 既定値の順で使う。
-if command -v jq >/dev/null 2>&1 && [ -f "$SETTINGS_FILE" ]; then
+if [ -n "${CLAUDE_PROJECT_DIR:-}" ] && command -v jq >/dev/null 2>&1 && [ -f "$SETTINGS_FILE" ]; then
   SHORTS_URL="$(jq -r '.env.CLAUDE_DOPAMINE_URL // "https://www.youtube.com/shorts"' "$SETTINGS_FILE" 2>/dev/null)"
   DISABLE="$(jq -r '.env.CLAUDE_DOPAMINE_DISABLE // "0"' "$SETTINGS_FILE" 2>/dev/null)"
   BROWSER_APP="$(jq -r '.env.CLAUDE_DOPAMINE_BROWSER // "Google Chrome"' "$SETTINGS_FILE" 2>/dev/null)"

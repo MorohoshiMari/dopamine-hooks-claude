@@ -1,14 +1,12 @@
 {
-  "env": {
-    "CLAUDE_DOPAMINE_URL": "https://www.youtube.com/shorts"
-  },
   "hooks": {
     "UserPromptSubmit": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/dopamine-open.sh\"",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/dopamine-open.sh",
             "timeout": 15,
             "statusMessage": "YouTube を開いています..."
           }
@@ -17,10 +15,11 @@
     ],
     "Stop": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/dopamine-close.sh\"",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/dopamine-close.sh",
             "timeout": 15,
             "statusMessage": "元の画面に戻しています..."
           }
