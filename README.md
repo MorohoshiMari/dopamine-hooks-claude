@@ -61,16 +61,6 @@ npx dopamine-hooks-claude remove                # 導入した関連ファイル
 | `/dopamine-on` | フックを有効化する |
 | `/dopamine-off` | フックを無効化する（何も開かなくなる） |
 
-## 削除方法
-
-`npx dopamine-hooks-claude init` は npm の依存関係としてインストールされない（`npx` は一時実行のみで `package.json` にも `node_modules` にも残らない）ため，`npm uninstall` に相当する操作自体が発生しません．導入した `.claude/hooks/dopamine-*.sh`・`.claude/commands/dopamine-*.md`・`settings.json` 内の `env.CLAUDE_DOPAMINE_*` とフック登録だけを取り除きたい場合は，`remove` を実行してください．
-
-```bash
-npx dopamine-hooks-claude remove
-```
-
-このコマンドは dopamine-hooks-claude が追加したファイル・設定だけを対象にし，他のフックや `env` の値には一切触れません．
-
 ## ライセンス
 
 MIT
