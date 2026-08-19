@@ -1,6 +1,6 @@
 # dopamine-hooks-claude
 
-[Claude Code](https://claude.com/claude-code) の生成待ちの間，Mrs. GREEN APPLE のライラックを流し続け，あなたを飽きさせません．
+[Claude Code](https://claude.com/claude-code) の生成待ちの間，Mrs. GREEN APPLE の [ライラック](https://youtu.be/QjrkrVmC-8M?si=DN9b0Cone07h000z) を流し続け，あなたを飽きさせません．
 
 ※開かれる URL は任意のものに変更可能です．
 
