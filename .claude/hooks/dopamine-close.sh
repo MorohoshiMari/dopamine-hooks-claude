@@ -22,16 +22,17 @@ if [ ! -f "$state_file" ]; then
   exit 0
 fi
 
-IFS=$'\t' read -r prev_app win_id <"$state_file"
+IFS=$'\t' read -r prev_app win_id browser_app <"$state_file"
+browser_app="${browser_app:-Google Chrome}"
 rm -f "$state_file"
-log "closing window=$win_id, restoring focus to '${prev_app:-?}'"
+log "closing window=$win_id ($browser_app), restoring focus to '${prev_app:-?}'"
 
-# Chrome が起動していないなら閉じる対象もない (tell で起動させないよう pgrep で確認)
-if [ -n "${win_id:-}" ] && /usr/bin/pgrep -qx "Google Chrome"; then
-  # Chrome では repeat 内の window 参照に close を送っても無視されるため
+# ブラウザが起動していないなら閉じる対象もない (tell で起動させないよう pgrep で確認)
+if [ -n "${win_id:-}" ] && /usr/bin/pgrep -qx "$browser_app"; then
+  # ループ内の window 参照に close を送っても無視されるアプリがあるため
   # `window id N` で直接指定する。既に閉じられている場合はエラーになるので try で握る。
   /usr/bin/osascript >/dev/null 2>&1 <<APPLESCRIPT
-tell application "Google Chrome"
+tell application "$browser_app"
 	try
 		close (window id ${win_id})
 	end try

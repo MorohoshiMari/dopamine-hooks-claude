@@ -2,7 +2,7 @@
 
 [Claude Code](https://claude.com/claude-code) 用の「気分転換」フック集です。
 
-- `UserPromptSubmit`（プロンプト送信時）に発火し、新しい Chrome ウィンドウで指定した動画（既定は YouTube Shorts フィード）を開きます
+- `UserPromptSubmit`（プロンプト送信時）に発火し、新しいブラウザウィンドウで指定したURL（既定は YouTube Shorts フィード、既定ブラウザは Google Chrome）を開きます
 - `Stop`（AIの応答生成が完了した時）に発火し、そのウィンドウを閉じてプロンプト送信直前に最前面だったアプリへフォーカスを戻します
 
 生成AIの応答を待つ間、少しだけ気分転換したい人向けのプロジェクト固有フックです。
@@ -10,10 +10,10 @@
 ## 動作環境
 
 - macOS
-- Google Chrome
+- Google Chrome または Safari（`Microsoft Edge` / `Brave Browser` など Chrome と同じ AppleScript辞書を持つブラウザも指定可能）
 - Node.js >= 16（導入コマンド実行時のみ）
 
-初回フック実行時、システム設定 → プライバシーとセキュリティ → オートメーション で、ターミナル（または利用しているシェルアプリ）から **Google Chrome** と **System Events** への操作許可を求められます。許可してください。
+初回フック実行時、システム設定 → プライバシーとセキュリティ → オートメーション で、ターミナル（または利用しているシェルアプリ）から使用するブラウザと **System Events** への操作許可を求められます。許可してください。
 
 ## 導入方法
 
@@ -36,9 +36,10 @@ pnpm dlx dopamine-hooks-claude init
 │   ├── dopamine-open.sh   # UserPromptSubmit hook
 │   └── dopamine-close.sh  # Stop hook
 └── commands/
-    ├── dopamine-url.md    # /dopamine-url <url> — 開くURLを変更
-    ├── dopamine-on.md     # /dopamine-on        — フックを有効化
-    └── dopamine-off.md    # /dopamine-off       — フックを無効化
+    ├── dopamine-url.md      # /dopamine-url <url>     — 開くURLを変更
+    ├── dopamine-browser.md  # /dopamine-browser <app> — 開くブラウザを変更
+    ├── dopamine-on.md       # /dopamine-on            — フックを有効化
+    └── dopamine-off.md      # /dopamine-off           — フックを無効化
 ```
 
 導入後、そのディレクトリで `claude` を起動してください。
@@ -47,15 +48,16 @@ pnpm dlx dopamine-hooks-claude init
 
 ## 使い方
 
-設定変更には2通りの方法があります。中身はどちらも同じで、`.claude/settings.json` の `env.CLAUDE_DOPAMINE_URL` / `env.CLAUDE_DOPAMINE_DISABLE` を書き換えるだけです。変更はフック実行のたびに読み直されるため、Claude Code の再起動なしで次回のプロンプト送信から反映されます。
+設定変更には2通りの方法があります。中身はどちらも同じで、`.claude/settings.json` の `env.CLAUDE_DOPAMINE_URL` / `env.CLAUDE_DOPAMINE_DISABLE` / `env.CLAUDE_DOPAMINE_BROWSER` を書き換えるだけです。変更はフック実行のたびに読み直されるため、Claude Code の再起動なしで次回のプロンプト送信から反映されます。
 
 ### 方法1: ターミナルから直接実行（推奨）
 
 ```bash
-npx dopamine-hooks-claude on              # 有効化
-npx dopamine-hooks-claude off             # 無効化
-npx dopamine-hooks-claude url <url>       # 開くURLを変更
-npx dopamine-hooks-claude status          # 現在の設定を表示
+npx dopamine-hooks-claude on                    # 有効化
+npx dopamine-hooks-claude off                   # 無効化
+npx dopamine-hooks-claude url <url>             # 開くURLを変更
+npx dopamine-hooks-claude browser "Safari"      # 開くブラウザを変更（既定: "Google Chrome"）
+npx dopamine-hooks-claude status                # 現在の設定を表示
 ```
 
 ### 方法2: Claude Code のスラッシュコマンド
@@ -63,6 +65,7 @@ npx dopamine-hooks-claude status          # 現在の設定を表示
 | コマンド | 内容 |
 |---|---|
 | `/dopamine-url <url>` | 開くURLを変更する |
+| `/dopamine-browser <app>` | 開くブラウザを変更する（`"Google Chrome"` / `"Safari"` 等） |
 | `/dopamine-on` | フックを有効化する |
 | `/dopamine-off` | フックを無効化する（何も開かなくなる） |
 
