@@ -1,6 +1,6 @@
 {
   "name": "dopamine-hooks-claude",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Claude Code 用の気分転換フック（UserPromptSubmitでYouTubeを開き、Stopで元の画面に復帰）をプロジェクトに導入するCLI",
   "bin": {
     "dopamine-hooks-claude": "bin/cli.js"
