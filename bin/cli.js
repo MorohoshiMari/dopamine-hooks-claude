@@ -9,6 +9,7 @@ const TARGET_DIR = path.join(process.cwd(), '.claude');
 const SETTINGS_FILE = path.join(TARGET_DIR, 'settings.json');
 const DEFAULT_URL = 'https://www.youtube.com/shorts';
 const DEFAULT_BROWSER = 'Google Chrome';
+const SUPPORTED_BROWSERS = ['Google Chrome', 'Safari', 'Microsoft Edge', 'Brave Browser'];
 
 function copyRecursive(src, dest) {
   const stat = fs.statSync(src);
@@ -31,7 +32,7 @@ function printUsage() {
   console.log('  npx dopamine-hooks-claude on            フックを有効化する');
   console.log('  npx dopamine-hooks-claude off           フックを無効化する');
   console.log('  npx dopamine-hooks-claude url <url>     開くURLを変更する');
-  console.log('  npx dopamine-hooks-claude browser <app>  開くブラウザを変更する ("Google Chrome" / "Safari" 等)');
+  console.log('  npx dopamine-hooks-claude browser <app>  開くブラウザを変更する ("Google Chrome" | "Safari" | "Microsoft Edge" | "Brave Browser")');
   console.log('  npx dopamine-hooks-claude status         現在の設定を表示する');
   console.log('');
   console.log('on/off/url/browser/status はターミナルから直接実行してください。');
@@ -108,8 +109,9 @@ function cmdUrl(url) {
 }
 
 function cmdBrowser(browser) {
-  if (!browser) {
-    console.error('エラー: ブラウザのアプリ名を指定してください（例: "Google Chrome", "Safari"）。');
+  if (!browser || !SUPPORTED_BROWSERS.includes(browser)) {
+    console.error(`エラー: サポートしているブラウザは次のいずれかのみです: ${SUPPORTED_BROWSERS.map((b) => `"${b}"`).join(', ')}`);
+    console.error('（フック側のAppleScript実装がこの4つにしか対応していないため、他の名前を指定しても動作しません）');
     console.error('使い方: dopamine-hooks-claude browser <app>');
     process.exit(1);
   }
