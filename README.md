@@ -1,23 +1,18 @@
 # dopamine-hooks-claude
 
-[Claude Code](https://claude.com/claude-code) 用の「気分転換」フック集です。
-
-- `UserPromptSubmit`（プロンプト送信時）に発火し、新しいブラウザウィンドウで指定したURL（既定は YouTube Shorts フィード、既定ブラウザは Google Chrome）を開きます
-- `Stop`（AIの応答生成が完了した時）に発火し、そのウィンドウを閉じてプロンプト送信直前に最前面だったアプリへフォーカスを戻します
-
-生成AIの応答を待つ間、少しだけ気分転換したい人向けのプロジェクト固有フックです。
+[Claude Code](https://claude.com/claude-code) の生成待ちの間，Mrs. Green Appleのライラックを流し続け，あなたを飽きさせません
 
 ## 動作環境
 
 - macOS
 - Google Chrome または Safari（`Microsoft Edge` / `Brave Browser` など Chrome と同じ AppleScript辞書を持つブラウザも指定可能）
-- Node.js >= 16（導入コマンド実行時のみ）
+- Node.js >= 16
 
-初回フック実行時、システム設定 → プライバシーとセキュリティ → オートメーション で、ターミナル（または利用しているシェルアプリ）から使用するブラウザと **System Events** への操作許可を求められます。許可してください。
+初回フック実行時，システム設定 → プライバシーとセキュリティ → オートメーション で，ターミナル（または利用しているシェルアプリ）から使用するブラウザと **System Events** への操作許可を求められます．許可してください．
 
 ## 導入方法
 
-導入したいプロジェクトのルートディレクトリで実行します。
+導入したいプロジェクトのルートディレクトリで実行します．
 
 ```bash
 npx dopamine-hooks-claude init
@@ -27,7 +22,7 @@ yarn dlx dopamine-hooks-claude init
 pnpm dlx dopamine-hooks-claude init
 ```
 
-`.claude/` 以下に以下のファイルが作成されます。既に `.claude/` が存在する場合は上書きせずエラー終了します。
+`.claude/` 以下に以下のファイルが作成されます．既に `.claude/` が存在する場合はエラーにせず，関連ファイルだけを追記マージします（既存の他のフック・コマンド・`env`・同名でないファイルは上書きしません．同名ファイルが既にあればそのファイルだけスキップします）．
 
 ```
 .claude/
@@ -42,15 +37,9 @@ pnpm dlx dopamine-hooks-claude init
     └── dopamine-off.md      # /dopamine-off           — フックを無効化
 ```
 
-導入後、そのディレクトリで `claude` を起動してください。
-
-> 既に起動中の Claude Code セッションに後から `.claude/` を追加した場合は、一度セッションを再起動してください（設定ファイル監視の仕様上、セッション起動後に新規作成された `settings.json` は自動検知されません）。最初から `.claude/` がある状態で `claude` を起動する場合は再起動不要です。
-
 ## 使い方
 
-設定変更には2通りの方法があります。中身はどちらも同じで、`.claude/settings.json` の `env.CLAUDE_DOPAMINE_URL` / `env.CLAUDE_DOPAMINE_DISABLE` / `env.CLAUDE_DOPAMINE_BROWSER` を書き換えるだけです。変更はフック実行のたびに読み直されるため、Claude Code の再起動なしで次回のプロンプト送信から反映されます。
-
-### 方法1: ターミナルから直接実行（推奨）
+### CLIから直接実行
 
 ```bash
 npx dopamine-hooks-claude on                    # 有効化
@@ -58,6 +47,7 @@ npx dopamine-hooks-claude off                   # 無効化
 npx dopamine-hooks-claude url <url>             # 開くURLを変更
 npx dopamine-hooks-claude browser "Safari"      # 開くブラウザを変更（既定: "Google Chrome"）
 npx dopamine-hooks-claude status                # 現在の設定を表示
+npx dopamine-hooks-claude remove                # 導入した関連ファイル・設定だけを削除
 ```
 
 ### 方法2: Claude Code のスラッシュコマンド
@@ -69,7 +59,15 @@ npx dopamine-hooks-claude status                # 現在の設定を表示
 | `/dopamine-on` | フックを有効化する |
 | `/dopamine-off` | フックを無効化する（何も開かなくなる） |
 
-> **注意**: スラッシュコマンドはそれ自体が「プロンプト送信」なので、`/dopamine-off` を打った瞬間に `UserPromptSubmit` hook がまだ有効な状態のまま発火し、無効化が反映される前に一度だけページが開いてしまいます。この一手間を避けたい場合は方法1のCLIを使ってください。
+## 削除方法
+
+`npx dopamine-hooks-claude init` は npm の依存関係としてインストールされない（`npx` は一時実行のみで `package.json` にも `node_modules` にも残らない）ため，`npm uninstall` に相当する操作自体が発生しません．導入した `.claude/hooks/dopamine-*.sh`・`.claude/commands/dopamine-*.md`・`settings.json` 内の `env.CLAUDE_DOPAMINE_*` とフック登録だけを取り除きたい場合は，`remove` を実行してください．
+
+```bash
+npx dopamine-hooks-claude remove
+```
+
+このコマンドは dopamine-hooks-claude が追加したファイル・設定だけを対象にし，他のフックや `env` の値には一切触れません．
 
 ## ライセンス
 
