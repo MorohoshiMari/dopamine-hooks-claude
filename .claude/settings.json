@@ -1,0 +1,32 @@
+{
+  "env": {
+    "CLAUDE_DOPAMINE_URL": "https://youtu.be/QjrkrVmC-8M?t=69",
+    "CLAUDE_DOPAMINE_DISABLE": "0"
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/dopamine-open.sh\"",
+            "timeout": 15,
+            "statusMessage": "YouTube を開いています..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/dopamine-close.sh\"",
+            "timeout": 15,
+            "statusMessage": "元の画面に戻しています..."
+          }
+        ]
+      }
+    ]
+  }
+}
