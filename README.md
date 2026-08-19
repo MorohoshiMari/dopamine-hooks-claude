@@ -1,6 +1,6 @@
 # dopamine-hooks-claude
 
-[Claude Code](https://claude.com/claude-code) の生成待ちの間，Mrs. Green Appleのライラックを流し続け，あなたを飽きさせません
+[Claude Code](https://claude.com/claude-code) の生成待ちの間,Mrs. Green Appleのライラックを流し続け,あなたを飽きさせません
 
 ## 動作環境
 
@@ -8,11 +8,11 @@
 - Google Chrome または Safari（`Microsoft Edge` / `Brave Browser` など Chrome と同じ AppleScript辞書を持つブラウザも指定可能）
 - Node.js >= 16
 
-初回フック実行時，システム設定 → プライバシーとセキュリティ → オートメーション で，ターミナル（または利用しているシェルアプリ）から使用するブラウザと **System Events** への操作許可を求められます．許可してください．
+初回フック実行時,システム設定 → プライバシーとセキュリティ → オートメーション で,ターミナル（または利用しているシェルアプリ）から使用するブラウザと **System Events** への操作許可を求められます.許可してください.
 
 ## 導入方法
 
-導入したいプロジェクトのルートディレクトリで実行します．
+導入したいプロジェクトのルートディレクトリで実行します.
 
 ```bash
 npx dopamine-hooks-claude init
@@ -22,7 +22,7 @@ yarn dlx dopamine-hooks-claude init
 pnpm dlx dopamine-hooks-claude init
 ```
 
-`.claude/` 以下に以下のファイルが作成されます．既に `.claude/` が存在する場合はエラーにせず，関連ファイルだけを追記マージします（既存の他のフック・コマンド・`env`・同名でないファイルは上書きしません．同名ファイルが既にあればそのファイルだけスキップします）．
+`.claude/` 以下に以下のファイルが作成されます.既に `.claude/` が存在する場合はエラーにせず,関連ファイルだけを追記マージします（既存の他のフック・コマンド・`env`・同名でないファイルは上書きしません.同名ファイルが既にあればそのファイルだけスキップします）.
 
 ```
 .claude/
@@ -61,13 +61,13 @@ npx dopamine-hooks-claude remove                # 導入した関連ファイル
 
 ## 削除方法
 
-`npx dopamine-hooks-claude init` は npm の依存関係としてインストールされない（`npx` は一時実行のみで `package.json` にも `node_modules` にも残らない）ため，`npm uninstall` に相当する操作自体が発生しません．導入した `.claude/hooks/dopamine-*.sh`・`.claude/commands/dopamine-*.md`・`settings.json` 内の `env.CLAUDE_DOPAMINE_*` とフック登録だけを取り除きたい場合は，`remove` を実行してください．
+`npx dopamine-hooks-claude init` は npm の依存関係としてインストールされない（`npx` は一時実行のみで `package.json` にも `node_modules` にも残らない）ため,`npm uninstall` に相当する操作自体が発生しません.導入した `.claude/hooks/dopamine-*.sh`・`.claude/commands/dopamine-*.md`・`settings.json` 内の `env.CLAUDE_DOPAMINE_*` とフック登録だけを取り除きたい場合は,`remove` を実行してください.
 
 ```bash
 npx dopamine-hooks-claude remove
 ```
 
-このコマンドは dopamine-hooks-claude が追加したファイル・設定だけを対象にし，他のフックや `env` の値には一切触れません．
+このコマンドは dopamine-hooks-claude が追加したファイル・設定だけを対象にし,他のフックや `env` の値には一切触れません.
 
 ## ライセンス
 
