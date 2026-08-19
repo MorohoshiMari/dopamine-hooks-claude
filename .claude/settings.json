@@ -1,7 +1,7 @@
 {
   "env": {
     "CLAUDE_DOPAMINE_URL": "https://youtu.be/QjrkrVmC-8M?t=69",
-    "CLAUDE_DOPAMINE_DISABLE": "0"
+    "CLAUDE_DOPAMINE_DISABLE": "1"
   },
   "hooks": {
     "UserPromptSubmit": [

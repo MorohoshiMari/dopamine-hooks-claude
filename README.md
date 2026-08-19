@@ -47,7 +47,18 @@ pnpm dlx dopamine-hooks-claude init
 
 ## 使い方
 
-導入後、Claude Code のプロンプトから以下のスラッシュコマンドで挙動を調整できます。
+設定変更には2通りの方法があります。中身はどちらも同じで、`.claude/settings.json` の `env.CLAUDE_DOPAMINE_URL` / `env.CLAUDE_DOPAMINE_DISABLE` を書き換えるだけです。変更はフック実行のたびに読み直されるため、Claude Code の再起動なしで次回のプロンプト送信から反映されます。
+
+### 方法1: ターミナルから直接実行（推奨）
+
+```bash
+npx dopamine-hooks-claude on              # 有効化
+npx dopamine-hooks-claude off             # 無効化
+npx dopamine-hooks-claude url <url>       # 開くURLを変更
+npx dopamine-hooks-claude status          # 現在の設定を表示
+```
+
+### 方法2: Claude Code のスラッシュコマンド
 
 | コマンド | 内容 |
 |---|---|
@@ -55,7 +66,7 @@ pnpm dlx dopamine-hooks-claude init
 | `/dopamine-on` | フックを有効化する |
 | `/dopamine-off` | フックを無効化する（何も開かなくなる） |
 
-設定は `.claude/settings.json` の `env.CLAUDE_DOPAMINE_URL` / `env.CLAUDE_DOPAMINE_DISABLE` に保存され、フック実行のたびに読み直されるため、変更は Claude Code の再起動なしで次回のプロンプト送信から反映されます。
+> **注意**: スラッシュコマンドはそれ自体が「プロンプト送信」なので、`/dopamine-off` を打った瞬間に `UserPromptSubmit` hook がまだ有効な状態のまま発火し、無効化が反映される前に一度だけページが開いてしまいます。この一手間を避けたい場合は方法1のCLIを使ってください。
 
 ## ライセンス
 
